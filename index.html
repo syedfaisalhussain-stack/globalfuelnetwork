@@ -1,697 +1,318 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GlobalFuel Network</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    /* Root & Global Styles */
-    :root {
-      --bg: #0a0a0a;
-      --gold: #d4af37;
-      --muted: #9b9b9b;
-      --nav-height: 72px;
-      --max-width: 1200px;
-      font-family: 'Poppins', sans-serif;
+    :root{
+      --gold:#FFD700;
+      --black:#0e0e0e;
+      --nav-h:72px;
     }
 
-	/* Header Nav Links */
-		nav ul li a {
-		color: #fff;
-		text-decoration: none;
-		font-size: 16px;
-		transition: color 0.3s;
-}
-
-nav ul li a:hover,
-nav ul li a.active {
-  color: var(--gold);   /* golden when active */
-}
-
-	.site-title {
-  font-size: 22px;
-  font-weight: bold;
-  color: var(--gold);
-  display: inline-block;
-  animation: slideLoop 5s linear infinite;
-}
-
-@keyframes slideLoop {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: #d4af37; line-height: 1.45; }
-
-    /* Navbar */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--nav-height);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 32px;
-      background: rgba(4,4,4,0.6);
-      backdrop-filter: blur(4px);
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      z-index: 1000;
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:#fff;
+      background:var(--black);
+      overflow-x:hidden;
+      min-height:100vh;
     }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    .nav-left img { height: 40px; border-radius: 8px; }
-    .brand { font-weight: 700; font-size: 20px; color: #d4af37; }
-    .nav-links ul { display: flex; gap: 20px; list-style: none; }
-    .nav-links a {
-      color: #fff; text-decoration: none; padding: 8px 10px;
-      border-radius: 8px; font-weight: 600;
-      transition: color .18s, background .18s;
+
+    /* ---------- Background ---------- */
+    .bg-slideshow,
+    .bg-slideshow > span{
+      position:fixed;
+      inset:0;
+      z-index:-3;
     }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-links a.active { color: var(--gold); background: rgba(212,175,55,0.06); }
-
-    /* Sections */
-    section {
-      min-height: calc(100vh - var(--nav-height));
-      padding: calc(var(--nav-height) + 28px) 20px 40px;
-      display: flex; align-items: center; justify-content: center;
-      scroll-margin-top: calc(var(--nav-height) + 10px);
+    .bg-slideshow{ pointer-events:none; }
+    .bg-slideshow > span{
+      background-position:center;
+      background-size:cover;
+      opacity:0;
+      filter: blur(3px) brightness(0.55);
+      transform:scale(1.06);
+      animation: fadeCycle 24s infinite ease-in-out,
+                 panX 24s infinite linear;
     }
-    .constrain { max-width: var(--max-width); width: 100%; margin: auto; }
-
-    /* Hero */
-    #home {
-      background: url('images/header-bg.jpg') center/cover no-repeat;
-      text-align: center; position: relative;
+    .bg-slideshow > span:nth-child(1){
+      background-image:url('images/header1-bg.jpg');
+      animation-delay:0s,0s;
     }
-    #home::before {
-      content: ""; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+    .bg-slideshow > span:nth-child(2){
+      background-image:url('images/header2-bg.jpg');
+      animation-delay:8s,8s;
     }
-    #home .content { position: relative; z-index: 1; }
-    #home h1 { font-size: 42px; color: var(--gold); margin-bottom: 12px; }
-    #home p { color: var(--gold); font-size: 20px; margin-bottom: 20px; }
-    
-	.special-offer-card .btn {
-  display: inline-block;
-  margin-top: 20px;   /* 👈 Adds space above the button */
-  padding: 12px 25px;
-  background: var(--gold);
-  font-color: var(--Black);
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.special-offer-card .btn:hover {
-  background: #e6b800;
-  transform: translateY(-3px);
-}
-.btn:hover { transform: translateY(-3px); filter: brightness(1.03); }
-
-    /* Offers */
-    h2 { text-align: center; color: var(--gold); margin-bottom: 18px; }
-    .offers-grid {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 20px;
+    .bg-slideshow > span:nth-child(3){
+      background-image:url('images/header3-bg.jpg');
+      animation-delay:16s,16s;
     }
-    .offer-card {
-      background: #111; padding: 18px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.05); transition: .2s;
+    @keyframes fadeCycle{
+      0%,30% {opacity:1}
+      42%,88%{opacity:0}
+      100%   {opacity:1}
     }
-    .offer-card:hover { transform: translateY(-8px); box-shadow: 0 18px 50px rgba(0,0,0,0.6); }
-    .offer-card h3 { color: var(--gold); margin-bottom: 8px; }
-    .offer-card p { color: var(--muted); font-size: 14px; }
-	
-.offer-card { max-width: 700px; margin: 30px auto; padding: 30px; border: 3px solid gold; border-radius: 12px; background: #000; color: #d4af37; text-align: center; box-shadow: 0 0 20px rgba(212,175,55,0.4); }
-
-.offer-heading {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.offer-heading::after {
-  content: "";
-  display: block;
-  width: 80px;
-  height: 3px;
-  background: gold;
-  margin: 8px auto 0;
-  border-radius: 2px;
-}
-
-.offer-subject {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 10px 0 20px;
-  color: #fff;
-}
-
-.offer-description {
-  font-size: 16px;
-  line-height: 1.6;
-  text-align: justify;
-  margin-bottom: 25px;
-  color: #d4af37;
-}
-
-.offer-btn {
-  padding: 12px 24px;
-  background: gold;
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.offer-btn:hover {
-  background: #000;
-  color: gold;
-  border: 1px solid gold;
-}
-
-
-
-    /* Products Section */
-.products-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;      /* centers heading + cards */
-  justify-content: center;  /* vertical alignment */
-  padding: 60px 20px;
-  background: #000;
-  color: #fff;
-}
-
-/* Products Title */
-.products-title {
-  font-size: 32px;
-  font-weight: bold;
-  color: var(--gold);
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-/* Products Grid */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 per row */
-  gap: 30px;
-  max-width: 1100px;                     /* keeps centered */
-  margin: 0 auto;
-}
-
-/* Product Card */
-.product-card {
-  background: #111;
-  border: 2px solid var(--gold);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.product-card h3 {
-  color: var(--gold);
-  margin: 10px 0;
-}
-
-
-.product-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-}
-
-/* Contact Section - Full Page Center */
-/* Contact Section */
-.contact-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 20px;
-}
-
-/* Title Styling */
-.contact-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--gold, #d4af37);
-  margin-bottom: 20px;
-  position: relative;
-  display: inline-block;
-}
-
-/* Golden Underline Animation */
-.contact-title::after {
-  content: "";
-  display: block;
-  height: 2px;
-  width: 0;
-  background: var(--gold, #d4af37);
-  margin: 3px auto 0;
-  border-radius: 2px;
-  animation: underlineGrow 2s forwards;
-}
-
-@keyframes underlineGrow {
-  from { width: 0; opacity: 0; }
-  to { width: 150px; opacity: 1; }
-}
-
-/* Contact Form Card - Single Golden Border */
-.contact-card {
-  border: 2px solid var(--gold, #d4af37);
-  padding: 12px;
-  width: 100%;
-  max-width: 600px;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
-}
-
-
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.contact-form button {
-  background: var(--gold, #d4af37);
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  color: #000;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.contact-form button:hover {
-  background: #fff;
-  color: var(--gold, #d4af37);
-  transform: scale(1.05);
-}
-
-
-/* Title */
-.contact-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--gold);
-  margin-bottom: 25px;
-}
-
-/* -----------------------
-   Contact button - final override
-   Put this at the end of your stylesheet
-   ----------------------- */
-.contact-card .contact-form button {
-  width: 100%;
-  padding: 12px 18px;
-  background: var(--gold, #d4af37); /* default gold */
-  color: #000;                       /* black text by default */
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .22s ease, color .22s ease, box-shadow .22s ease, transform .15s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* Hover state: black background, golden text */
-.contact-card .contact-form button:hover,
-.contact-card .contact-form button:focus {
-  background: #000 !important;
-  color: var(--gold, #d4af37) !important;
-  border: 1px solid var(--gold, #d4af37) !important;
-  box-shadow: 0 8px 24px rgba(212,175,55,0.18) !important;
-  transform: translateY(-2px);
-}
-
-/* If there are inline styles or other rules still overriding, this forces the color too */
-.contact-card .contact-form button:hover span,
-.contact-card .contact-form button:focus span {
-  color: var(--gold, #d4af37) !important;
-}
-
-/* Accessibility: visible focus outline */
-.contact-card .contact-form button:focus {
-  outline: 3px solid rgba(212,175,55,0.12);
-  outline-offset: 2px;
-}
-
-/* Socials (gold, centered, glow on hover) */
-.socials-wrap { 
-  padding: 12px 0 20px; 
-  text-align: center; 
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-}
-
-.social-icons a {
-  display: inline-flex;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(212,175,55,0.45);
-  color: var(--gold, #d4af37);
-  align-items: center;
-  justify-content: center;
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-
-.social-icons a:hover {
-  transform: translateY(-2px) scale(1.06);
-  box-shadow: 0 0 16px rgba(212,175,55,0.45);
-  border-color: var(--gold, #d4af37);
-}
-
-.social-icons svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor; /* inherits gold */
-}
-
-/* Global Button Style */
-.btn {
-  display: inline-block;
-  padding: 12px 20px;
-  background: var(--gold, #d4af37);  /* Default gold background */
-  color: #000;                       /* Black text */
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background .22s ease, color .22s ease, 
-              box-shadow .22s ease, transform .15s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-  text-align: center;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* Hover + Focus Effect */
-.btn:hover,
-.btn:focus {
-  background: #000 !important;               /* Black background */
-  color: var(--gold, #d4af37) !important;    /* Golden text */
-  border: 1px solid var(--gold, #d4af37) !important;
-  box-shadow: 0 8px 24px rgba(212,175,55,0.25) !important;
-  transform: translateY(-2px);
-}
-
-
-    /* Footer */
-    .footer {
-  background: #000;
-  padding: 10px 0;               /* smaller top & bottom padding */
-  text-align: center;
-  border-top: 1px solid #d4af37; /* golden line */
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;                     /* space between icons */
-  margin: 5px 0;                 /* tight top & bottom space */
-}
-
-.social-icons a img {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.social-icons a img:hover {
-  transform: scale(1.2);
-  filter: brightness(1.4);
-}
-
-.footer-text {
-  font-size: 15px;
-  font-weight: bold;
-  color: #d4af37;
-  margin: 0;
-}
-
-
-    /* Back to Top */
-    #backToTop {
-      position: fixed; bottom: 24px; right: 24px; display: none;
-      background: var(--gold); color: #111; border: none;
-      padding: 7px 14px; border-radius: 50%; cursor: pointer;
-      font-size: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    @keyframes panX{
+      0%{background-position:left center}
+      50%{background-position:right center}
+      100%{background-position:left center}
     }
-    #backToTop:hover { transform: translateY(-3px); }
-	
-	/* Social Media Section Wrapper */
-.socials-wrap {
-  margin-top: 0.5px;   /* reduce space above */
-  margin-bottom: 0.5px; /* reduce space below */
-}
+    .bg-overlay{
+      position:fixed; inset:0; z-index:-2;
+      background:
+        radial-gradient(1200px 400px at 50% 0%, rgba(0,0,0,0.35), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+    }
 
-/* Icons themselves */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;           /* space between icons */
-}
+    /* ---------- Header ---------- */
+    header{
+      position:fixed; inset:0 0 auto 0; height:var(--nav-h);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 28px;
+      background:rgba(0,0,0,0.68);
+      backdrop-filter:saturate(120%) blur(4px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      z-index:1000;
+    }
+    .logo{display:flex; align-items:center; gap:10px; font-weight:700; color:var(--gold);}
+    .logo img{height:40px; border-radius:8px}
 
-.social-icons a img {
-  width: 30px;         /* resize icons if too big */
-  height: 30px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
+    .nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
+    .nav-links a{
+      text-decoration:none; color:#fff; font-weight:600;
+      padding:8px 10px; border-radius:8px; transition:color .2s, background .2s;
+    }
+    .nav-links a.active{color:var(--gold); background:rgba(255,215,0,.08);}
 
-.social-icons a img:hover {
-  transform: scale(1.2);
-  filter: brightness(1.3);
-}
+    /* ---------- Sections ---------- */
+    section{
+      min-height:100vh;
+      padding:calc(var(--nav-h) + 30px) 20px 60px;
+      display:flex; flex-direction:column; justify-content:center;
+      scroll-margin-top:calc(var(--nav-h) + 12px);
+    }
+    section h2{
+      font-size:2.1rem; text-align:center; color:var(--gold);
+      margin:0 auto 28px; position:relative;
+    }
+    section h2::after{
+      content:""; display:block; width:0; height:3px;
+      background:var(--gold); margin:10px auto 0;
+      border-radius:2px; transition:width .6s ease;
+    }
+    section.visible h2::after{width:84px;}
 
-	
-	
+    /* ---------- Cards ---------- */
+    .offer-boxes,.products-grid{
+      display:grid; gap:22px; max-width:1100px; margin:0 auto;
+    }
+    .offer-boxes{grid-template-columns:repeat(3,1fr);}
+    .products-grid{grid-template-columns:repeat(3,1fr);}
+    .offer-card,.product-card{
+      border:2px solid var(--gold); border-radius:12px;
+      background:rgba(0,0,0,0.55); text-align:center;
+      padding:18px; box-shadow:0 0 20px rgba(255,215,0,0.22);
+      transition:transform .25s, box-shadow .25s;
+    }
+    .offer-card:hover,.product-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 0 28px rgba(255,215,0,0.38);
+    }
+    .offer-card h3,.product-card h3{color:var(--gold);}
+    .product-card img{
+      width:100%; height:180px; object-fit:cover;
+      border-radius:8px; margin-bottom:10px;
+    }
+
+    /* ---------- Contact ---------- */
+    .contact-card{
+      max-width:560px; margin:0 auto; padding:26px;
+      border:2px solid var(--gold); border-radius:12px;
+      background:rgba(0,0,0,0.55);
+    }
+    .contact-card input,.contact-card textarea{
+      width:100%; margin:10px 0; padding:12px; border-radius:8px; border:none;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn{
+      display:inline-block; margin-top:12px; padding:10px 18px;
+      background:var(--gold); color:#000; border:none; border-radius:8px;
+      font-weight:700; cursor:pointer; transition:.22s;
+    }
+    .btn:hover{background:#000; color:var(--gold); border:1px solid var(--gold);}
+
+    /* ---------- Footer ---------- */
+    .socials-wrap{
+      display:flex; justify-content:center; gap:16px; padding:16px 0;
+      background:rgba(0,0,0,0.8);
+    }
+    .socials-wrap img{width:24px; height:24px;}
+
+    /* ---------- Modal ---------- */
+    .modal {
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,0.7); justify-content:center; align-items:center;
+      z-index:2000;
+    }
+    .modal-content {
+      background:#111; padding:25px; border-radius:10px;
+      max-width:400px; width:90%; border:2px solid var(--gold);
+      color:white; text-align:center; position:relative;
+      animation:fadeIn .3s ease-in-out;
+    }
+    .modal-content input,.modal-content textarea{
+      width:100%; margin:10px 0; padding:10px; border-radius:6px; border:none;
+    }
+    .close-btn {
+      position:absolute; top:10px; right:20px;
+      font-size:1.5rem; cursor:pointer; color:var(--gold);
+    }
+    @keyframes fadeIn {
+      from{opacity:0; transform:scale(.9);}
+      to{opacity:1; transform:scale(1);}
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:980px){
+      .offer-boxes,.products-grid{grid-template-columns:repeat(2,1fr);}
+    }
+    @media (max-width:620px){
+      .offer-boxes,.products-grid{grid-template-columns:1fr;}
+      header{padding:0 18px;}
+      .nav-links{gap:14px;}
+    }
   </style>
 </head>
 <body>
+  <!-- Background -->
+  <div class="bg-slideshow"><span></span><span></span><span></span></div>
+  <div class="bg-overlay"></div>
 
-<div class="logo">
-  <img src="images/logo.png" alt="Logo">
-  <span class="site-title">GlobalFuel Network</span>
-</div>
-
-  <!-- Navbar -->
-  <nav>
-    <div class="nav-left">
-      <img src="images/logo.png" alt="logo" />
-      <div class="brand">GlobalFuel Network</div>
-    </div>
-    <div class="nav-links">
-      <ul>
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#offers">Special Offer</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-      </ul>
-    </div>
-  </nav>
+  <!-- Header -->
+  <header>
+    <div class="logo"><img src="images/logo.png" alt="Logo"> GlobalFuel Network</div>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#special-offer">Special Offer</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </header>
 
   <!-- Sections -->
-  <section id="home"><div class="constrain content"><h1>GlobalFuel Network</h1><p>We Connect Buyers & Sellers of Fuels & Commodities Worldwide.</p></div></section>
-    <!-- Special Offers -->
-    <!-- Special Offers -->
-  <div class="offer-card">
-  <h2 class="offer-heading">Dip & Pay</h2>
-  <p class="offer-subject">Premium Fuel Deals – EN590, Jet A1 & D6</p>
-  <p class="offer-description">
-    Hello, all respected buyers 🤝. 
-	EN590, Jet A1 & D6 available at very competitive prices in Fujairah. 
-	Non-selection origin. Dip n Pay procedure applies. Limited 
-    stocks available. Only serious buyers are welcome who like to follow procedures. 
-    Mandates or agents are welcome on the condition they deal with direct buyers. 
-    Interested buyers, kindly send me the LOI in proper form. No reply without LOI. 
-    Contact: globalfuelnetwrk@gmail.com 📩
-  </p>
-  <button class="offer-btn">Get This Offer</button>
-</div>
+  <section id="home"><h2>Welcome to GlobalFuel Network</h2></section>
 
-  
-
-
-<section id="products" class="products-section">
-  <h2 class="products-title">Our Products</h2>
-
-  <div class="products-grid">
-    <div class="product-card">
-      <img src="images/lng.jpg" alt="LNG">
-      <h3>LNG</h3>
-      <p>Liquefied Natural Gas description here...</p>
+  <section id="special-offer">
+    <h2>Special Offer</h2>
+    <div class="offer-boxes">
+      <div class="offer-card">
+        <h3>Loaded Vessels</h3>
+        <p>Vessel Name: NEW CONSTANT 
+		Vessel (IMO 9708514, MMSI 477810200)<br>
+		Product: En590<br>
+		TTO Price: $480 USD<br>
+		Destination Port: Zhoushan-China<br>
+		Quantity: 200KMT<br>
+		Vessel ETA: Sep 13<br>
+		Commision $5.00 USD Buyer Side<br> 
+		$5.00 USD Seller Side<br><br></p>
+        <button class="btn offer-btn">Get This Offer</button>
+      </div>
+      <div class="offer-card">
+        <h3>Vopak To Vopak</h3>
+        <p>Products Oridion: Latin America, Africa, Europe, Middle East, Asia, US<br><br>
+		Incoterms: CIF/FOB, CI Dip & Pay<br><br>
+		Payment Terms: L/C, SBLC, T/T, MT103<br><br>
+		Inspection: CIQ or equivalent<br><br>
+		Commission: As per NCNDA/IMFPA</p>
+        <button class="btn offer-btn">Get This Offer</button>
+      </div>
+      <div class="offer-card">
+        <h3>Description</h3>
+        <p>Only serious buyers are welcome. Kindly send LOI in proper form. Contact: globalfuelnetwrk@gmail.com</p>
+        <button class="btn offer-btn">Get This Offer</button>
+      </div>
     </div>
+  </section>
 
-    <div class="product-card">
-      <img src="images/lpg.jpg" alt="LPG">
-      <h3>LPG</h3>
-      <p>Liquefied Petroleum Gas description here...</p>
+  <section id="products">
+    <h2>Our Products</h2>
+    <div class="products-grid">
+      <div class="product-card"><img src="images/en590.jpg"><h3>EN590</h3><p>High-quality diesel fuel available.</p></div>
+      <div class="product-card"><img src="images/jet a1.jpg"><h3>Jet A1</h3><p>Premium aviation fuel.</p></div>
+      <div class="product-card"><img src="images/d6.jpg"><h3>D6</h3><p>Available in bulk with Dip &amp; Pay procedure.</p></div>
+      <div class="product-card"><img src="images/Vopak.jpg"><h3>Product 4</h3><p>Description for product 4.</p></div>
+      <div class="product-card"><img src="images/jp54.jpg"><h3>Product 5</h3><p>Description for product 5.</p></div>
+      <div class="product-card"><img src="images/d2.jpg"><h3>Product 6</h3><p>Description for product 6.</p></div>
+      <div class="product-card"><img src="images/lng.jpg"><h3>Product 7</h3><p>Description for product 7.</p></div>
+      <div class="product-card"><img src="images/lpg.jpg"><h3>Product 8</h3><p>Description for product 8.</p></div>
+      <div class="product-card"><img src="images/brazilian_sugar.jpg"><h3>Product 9</h3><p>Description for product 9.</p></div>
     </div>
+  </section>
 
-    <div class="product-card">
-      <img src="images/en590.jpg" alt="EN590">
-      <h3>EN590</h3>
-      <p>Diesel fuel EN590 description here...</p>
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-card">
+      <!-- Dummy Formspree (replace later with your own form ID) -->
+      <form action="https://formspree.io/f/xeojjzgy" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
     </div>
+  </section>
 
-    <div class="product-card">
-      <img src="images/jp54.jpg" alt="JP54">
-      <h3>JP54</h3>
-      <p>Aviation fuel JP54 description here...</p>
-    </div>
+  <!-- Footer -->
+  <div class="socials-wrap">
+    <a href="#"><img src="images/facebook02.png"></a>
+    <a href="#"><img src="images/linkedin.png"></a>
+    <a href="#"><img src="images/instagram02.png"></a>
+  </div>
 
-    <div class="product-card">
-      <img src="images/vopak.jpg" alt="Vopak">
-      <h3>Vopak</h3>
-      <p>Storage & logistics service description...</p>
-    </div>
-
-    <div class="product-card">
-      <img src="images/d2.jpg" alt="D2">
-      <h3>D2</h3>
-      <p>Diesel D2 fuel description here...</p>
-    </div>
-
-    <div class="product-card">
-      <img src="images/d6.jpg" alt="D6">
-      <h3>D6</h3>
-      <p>Residual fuel oil description here...</p>
-    </div>
-
-    <div class="product-card">
-      <img src="images/brazilian_sugar.jpg" alt="Brazilian Sugar">
-      <h3>Brazilian Sugar</h3>
-      <p>Premium Brazilian sugar description...</p>
-    </div>
-
-    <div class="product-card">
-      <img src="images/blco.jpg" alt="BLCO">
-      <h3>BLCO</h3>
-      <p>Bonny Light Crude Oil description...</p>
+  <!-- Modal -->
+  <div id="offerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Get This Offer</h2>
+      <form action="https://formspree.io/f/mpwjogda" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Submit</button>
+      </form>
     </div>
   </div>
-</section>
 
+  <script>
+    // Nav highlight + heading underline
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove("active"));
+          const id = entry.target.id;
+          document.querySelector(`.nav-links a[href="#${id}"]`)?.classList.add("active");
+          entry.target.classList.add("visible");
+        }
+      });
+    },{threshold:.6});
+    sections.forEach(s=>io.observe(s));
 
-  <section id="contact" class="contact-section">
-  <h2 class="contact-title">Contact Us</h2>
-  <div class="contact-card">
-    <form action="https://formspree.io/f/mpwjqjnb" method="POST" class="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-</section>
-
-<!-- Social Media Icons -->
-<div class="socials-wrap">
-  <div class="social-icons
-
-
-  <footer class="footer">
-  <div class="social-icons">
-    <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
-    <a href="#"><img src="images/linkein.png" alt="LinkedIn"></a>
-    <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
-  </div>
-  <p class="footer-text">© 2025 GlobalFuel Network — All Rights Reserved</p>
-</footer>
-
-
-  <!-- Back to Top -->
-  <button id="backToTop">↑</button>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Footer year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Back to Top
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => {
-    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
-  });
-  backToTop.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
-
-  // Nav highlight
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".nav-links a");
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => link.classList.remove("active"));
-        const id = entry.target.getAttribute("id");
-        document.querySelector(`.nav-links a[href="#${id}"]`)?.classList.add("active");
-      }
+    // Modal popup only for "Get This Offer"
+    document.querySelectorAll(".offer-btn").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        document.getElementById("offerModal").style.display="flex";
+      });
     });
-  }, {threshold: 0.6});
-  sections.forEach(sec => observer.observe(sec));
-});
-</script>
-<script>
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("nav ul li a");
-
-  window.addEventListener("scroll", () => {
-    let current = "";
-
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 80; // offset for header height
-      const sectionHeight = section.clientHeight;
-      if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-        current = section.getAttribute("id");
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href").includes(current)) {
-        link.classList.add("active");
-      }
-    });
-  });
-</script>
-
+    document.querySelector(".close-btn").onclick=()=>{document.getElementById("offerModal").style.display="none";}
+    window.onclick=e=>{if(e.target.id==="offerModal"){document.getElementById("offerModal").style.display="none";}}
+  </script>
 </body>
 </html>
